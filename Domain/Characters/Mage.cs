@@ -4,6 +4,8 @@
 public class Mage : Character
 {
     private string _evolutionJob = "";
+    private int _mana;
+    public int Mana;
 
     // HERE we use encapsulation to control access to the EvolutionJob property
     public string EvolutionJob 
@@ -13,7 +15,7 @@ public class Mage : Character
         {
             if (Level <= 20)
             {
-                 console.WriteLine($"{Name} needs to be at least level 20 to evolve. Current level: {Level}");
+                console.WriteLine($"{Name} needs to be at least level 20 to evolve. Current level: {Level}");
                 throw new InvalidOperationException("Cannot set EvolutionJob unless Level is greater than 20.");
             }
             _evolutionJob = value;
@@ -45,7 +47,13 @@ public class Mage : Character
             Console.WriteLine($"{Name} the mage tries to attack with a dagger, but it's not very effective!");
             return;
         } 
+        if (_mana == 0)
+        {
+            Console.WriteLine($"{Name} the mage has no mana left to cast spells!");
+            return;
+        }
         Console.WriteLine($"{Name} the mage casts a spell with: {Weapon}!");
+        mana -= 10;
 
     }
 }

@@ -3,6 +3,8 @@
 /// </summary>
 public class Warrior : Character
 {
+    public int stamina { get; set; } = 100;
+
     public Warrior(int id, string name, string weapon)
         : base(id, name, "Warrior", weapon)
     {
@@ -19,7 +21,13 @@ public class Warrior : Character
 
     public override void Attack()
     {
+        if(stamina == 0)
+        {
+            Console.WriteLine($"{Name} the warrior is too tired to attack!");
+            return;
+        }
         Console.WriteLine($"{Name} the warrior attacks with: {Weapon}!");
+        stamina -= 10;
     }
     
 }
