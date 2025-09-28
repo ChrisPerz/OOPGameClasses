@@ -9,9 +9,14 @@ public class Character
     public string CharacterClass { get; set; }
     public string Weapon { get; set;}
     public int Health { get; set; } = 100;
+    public int numberOfPotionsUsed { get; set; } = 0;
+    //TODO: potionObserver pattern implementation
+    private readonly List<IPotionObserver> _potionObservers = new List<IPotionObserver>();
+    protected readonly ILogger _logger;
 
-    public Character(int id, string name, string characterClass, string weapon, int level = 0)
+    public Character(int id, string name, string characterClass, string weapon, int level = 0, ILogger logger)
     {
+        _logger = logger;
         // Added validations to ensure data integrity
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -46,7 +51,7 @@ public class Character
     public virtual void TakeDamage(int damage)
     {
         Health -= damage;
-        Console.WriteLine($"{Name} takes {damage} damage. Remaining health: {Health}.");
+        _logger.Log($"{Name} takes {damage} damage. Remaining health: {Health}.");
     }
 
     public virtual void TakeDamage(int damage, string damageType)
@@ -56,7 +61,7 @@ public class Character
             ApplyVenomEffect();
         }
         Health -= damage;
-        Console.WriteLine($"{Name} takes {damage} {damageType} damage. Remaining health: {Health}.");
+        _logger.Log($"{Name} takes {damage} {damageType} damage. Remaining health: {Health}.");
     }
 
     private void ApplyVenomEffect()

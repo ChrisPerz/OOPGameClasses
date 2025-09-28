@@ -15,11 +15,11 @@ public class Mage : Character
         {
             if (Level <= 20)
             {
-                console.WriteLine($"{Name} needs to be at least level 20 to evolve. Current level: {Level}");
+                _logger.Log($"{Name} needs to be at least level 20 to evolve. Current level: {Level}");
                 throw new InvalidOperationException("Cannot set EvolutionJob unless Level is greater than 20.");
             }
             _evolutionJob = value;
-            Console.WriteLine($"{Name} has evolved into a {EvolutionJob}!");
+            _logger.Log($"{Name} has evolved into a {EvolutionJob}!");
         }; 
         
     }
@@ -29,30 +29,30 @@ public class Mage : Character
     {
         if (weapon == "Grimoire")
         {
-            Console.WriteLine("A grimoire is an excellent choice for a mage, enhancing spellcasting abilities.");
+            _logger.Log("A grimoire is an excellent choice for a mage, enhancing spellcasting abilities.");
         }
         if (weapon == "Staff")
         {
-            Console.WriteLine("A staff is a solid choice for a mage, offering both offensive and defensive capabilities.");
+            _logger.Log("A staff is a solid choice for a mage, offering both offensive and defensive capabilities.");
         }
         else if (weapon == "Dagger")
         {
-            Console.WriteLine("A dagger? Mages typically rely on their spells rather than close combat.");
+            _logger.Log("A dagger? Mages typically rely on their spells rather than close combat.");
         }
     }
     public override void Attack()
     {
         if (Weapon == "Dagger")
         {
-            Console.WriteLine($"{Name} the mage tries to attack with a dagger, but it's not very effective!");
+            _logger.Log($"{Name} the mage tries to attack with a dagger, but it's not very effective!");
             return;
         } 
         if (_mana == 0)
         {
-            Console.WriteLine($"{Name} the mage has no mana left to cast spells!");
+            _logger.Log($"{Name} the mage has no mana left to cast spells!");
             return;
         }
-        Console.WriteLine($"{Name} the mage casts a spell with: {Weapon}!");
+        _logger.Log($"{Name} the mage casts a spell with: {Weapon}!");
         mana -= 10;
 
     }

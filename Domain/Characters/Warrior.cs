@@ -10,11 +10,11 @@ public class Warrior : Character
     {
         if (weapon == "Tree branch")
         {
-            Console.WriteLine("A tree branch? Really? You might want to consider a real weapon for a warrior.");
+            _logger.Log("A tree branch? Really? You might want to consider a real weapon for a warrior.");
         }
         else if (weapon == "Greatsword")
         {
-            Console.WriteLine("Great choice! Greatswords are powerful but require strength to wield effectively.");
+            _logger.Log("Great choice! Greatswords are powerful but require strength to wield effectively.");
         }
         
     }
@@ -23,10 +23,10 @@ public class Warrior : Character
     {
         if(stamina == 0)
         {
-            Console.WriteLine($"{Name} the warrior is too tired to attack!");
+            _logger.Log($"{Name} the warrior is too tired to attack!");
             return;
         }
-        Console.WriteLine($"{Name} the warrior attacks with: {Weapon}!");
+        _logger.Log($"{Name} the warrior attacks with: {Weapon}!");
         stamina -= 10;
     }
     

@@ -18,12 +18,12 @@ public class Healer : Character
             //TODO: Add logic to change the value of numberOfPotionsUsed when a potion is used in the game
             if (numberOfPotionsUsed > 4)
             {
-                Console.WriteLine($"{Name} has used too many potions and cannot recover more mana.");
+                _logger.Log($"{Name} has used too many potions and cannot recover more mana.");
             }
             else
             {
                 _mana = value;
-                Console.WriteLine($"{Name} now has {Mana} mana.");
+                _logger.Log($"{Name} now has {Mana} mana.");
             }
         }
     }
@@ -33,11 +33,11 @@ public class Healer : Character
     {
         if (weapon == "Spellbook")
         {
-            Console.WriteLine("A spellbook is an excellent choice for a healer, you begin with better spells but they are limited to your book.");
+            _logger.Log("A spellbook is an excellent choice for a healer, you begin with better spells but they are limited to your book.");
         }
         if (weapon == "Staff")
         {
-            Console.WriteLine("A staff is a solid choice for a healer, offering both support and defensive capabilities.");
+            _logger.Log("A staff is a solid choice for a healer, offering both support and defensive capabilities.");
         }
         _mana = mana;
     }  
@@ -47,9 +47,9 @@ public class Healer : Character
     {
         if (mana == 0)
         {
-            Console.WriteLine($"{Name} the healer has no mana left to cast healing spells!");
+            _logger.Log($"{Name} the healer has no mana left to cast healing spells!");
             return;
         }
-        Console.WriteLine($"{Name} the healer casts a debuff spell with: {Weapon}!");
+        _logger.Log($"{Name} the healer casts a debuff spell with: {Weapon}!");
     } 
 }
