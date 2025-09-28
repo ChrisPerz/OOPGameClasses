@@ -10,8 +10,10 @@ public class Character
     public string Weapon { get; set;}
     public int Health { get; set; } = 100;
     public int numberOfPotionsUsed { get; set; } = 0;
-    //TODO: potionObserver pattern implementation
-    private readonly List<IPotionObserver> _potionObservers = new List<IPotionObserver>();
+    //TODO: potionObserver pattern implementation OR Use Composition to include a PotionSubject instance in the Character class
+    // private readonly PotionSubject _potionSubject = new();
+    // private readonly List<IPotionObserver> _potionObservers = new List<IPotionObserver>();
+    //
     protected readonly ILogger _logger;
 
     public Character(int id, string name, string characterClass, string weapon, int level = 0, ILogger logger)
