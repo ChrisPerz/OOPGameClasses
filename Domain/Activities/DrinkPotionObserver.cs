@@ -1,4 +1,5 @@
-// momentary method to aprox observer pattern for potion use
+// momentary method to aprox observer pattern for potion use 
+// Add IActivity interface and implement it in DrinkPotionObserver
 public class DrinkPotionObserver() : IPotionObserver
 {
     ILogger _logger;
