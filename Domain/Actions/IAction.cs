@@ -1,6 +1,6 @@
 namespace Domain.Activities
 {
-    public interface IActivity
+    public interface IAction
     {
         void Execute(Character character);
     }

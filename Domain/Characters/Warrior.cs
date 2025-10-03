@@ -4,6 +4,16 @@
 public class Warrior : Character
 {
     public int stamina { get; set; } = 100;
+    public int shield { get; set; } = 0;
+    public ClassType ClassType { get; set; } = ClassType.StaminaUser;
+
+    //THIS is a mistake, this is not overriding but hiding and this could lead to confusion and bugs - I left the comment here to remember why
+    // public List<IAction> Actions { get; set; } = new()
+    // {
+    //     new Attack(),
+    //     new Defend(),
+    //     new UsePotionAction()
+    // };
 
     public Warrior(int id, string name, string weapon)
         : base(id, name, "Warrior", weapon)
@@ -16,18 +26,9 @@ public class Warrior : Character
         {
             _logger.Log("Great choice! Greatswords are powerful but require strength to wield effectively.");
         }
-        
+        Actions.Add(new Attack());
+        Actions.Add(new Defend());
     }
 
-    public override void Attack()
-    {
-        if(stamina == 0)
-        {
-            _logger.Log($"{Name} the warrior is too tired to attack!");
-            return;
-        }
-        _logger.Log($"{Name} the warrior attacks with: {Weapon}!");
-        stamina -= 10;
-    }
-    
+
 }

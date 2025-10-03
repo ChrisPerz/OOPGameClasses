@@ -39,21 +39,25 @@ public class Mage : Character
         {
             _logger.Log("A dagger? Mages typically rely on their spells rather than close combat.");
         }
-    }
-    public override void Attack()
-    {
-        if (Weapon == "Dagger")
-        {
-            _logger.Log($"{Name} the mage tries to attack with a dagger, but it's not very effective!");
-            return;
-        } 
-        if (_mana == 0)
-        {
-            _logger.Log($"{Name} the mage has no mana left to cast spells!");
-            return;
-        }
-        _logger.Log($"{Name} the mage casts a spell with: {Weapon}!");
-        mana -= 10;
 
+        Actions.Add(new Attack());
     }
+
+    // <summary> Deprecated method, now using IAction interface for actions </summary>
+    // public override void Attack()
+    // {
+    //     if (Weapon == "Dagger")
+    //     {
+    //         _logger.Log($"{Name} the mage tries to attack with a dagger, but it's not very effective!");
+    //         return;
+    //     } 
+    //     if (_mana == 0)
+    //     {
+    //         _logger.Log($"{Name} the mage has no mana left to cast spells!");
+    //         return;
+    //     }
+    //     _logger.Log($"{Name} the mage casts a spell with: {Weapon}!");
+    //     mana -= 10;
+
+    // }
 }

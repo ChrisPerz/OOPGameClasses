@@ -10,13 +10,16 @@ public class Character
     public string Weapon { get; set;}
     public int Health { get; set; } = 100;
     public int numberOfPotionsUsed { get; set; } = 0;
+    public ClassType ClassType { get; set; }
+    public List<IAction> Actions { get; set; } = new();
+
     //TODO: potionObserver pattern implementation OR Use Composition to include a PotionSubject instance in the Character class
     // private readonly PotionSubject _potionSubject = new();
     // private readonly List<IPotionObserver> _potionObservers = new List<IPotionObserver>();
     //
     protected readonly ILogger _logger;
 
-    public Character(int id, string name, string characterClass, string weapon, int level = 0, ILogger logger)
+    public Character(int id, string name, string characterClass, string weapon, int level = 0, ClassType classType, ILogger logger)
     {
         _logger = logger;
         // Added validations to ensure data integrity
@@ -32,12 +35,17 @@ public class Character
         {
             throw new ArgumentException("Weapon cannot be null or empty.", nameof(weapon));
         }
+        if (string.IsNullOrWhiteSpace(classType.ToString()))
+        {
+            throw new ArgumentException("Weapon cannot be null or empty.", nameof(weapon));
+        }
 
         Id = id;
         Name = name;
         Level = level;
         CharacterClass = characterClass;
         Weapon = weapon;
+        ClassType = classType;
     }
 
     /// <summary>
@@ -73,5 +81,27 @@ public class Character
         int elapsedSeconds = 0;
 
         //TODO: Implement a proper timing mechanism for venom effect in a real game scenario
+    }
+    
+    //Since I am using a list of actions, I don't need to override this method in each character class just if I want to add specific behavior
+    // HERE we have an adventage since actions are separated from characters, we could execute infinite actions without modifying the character class
+    protected virtual void performAction(IAction action)
+    {
+        action.Execute(this);
+    }
+
+    public virtual void showActions()
+    {
+        foreach (var action in Actions)
+        {
+            _logger.Log($"{Name} can perform the action: {action.Name}");
+        }
+    }
+
+    // This would be cool to implement in the future
+    public void LearnSkill(IActivity skill)
+    {
+        Skills.Add(skill);
+        _logger.Log($"{Name} has learned a new skill: {skill.Name}");
     }
 }
