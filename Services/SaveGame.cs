@@ -36,7 +36,36 @@ namespace Services
                 return false
             }
         }
+
+        public async Task<GameState> LoadGameStateFromJson()
+        {
+            
+        }
         
+        public async Task<bool> SaveGameStateInBinary(GameState state)
+        {
+            using( FileStream fs = new Filestream(saveFileBinary, FileMode.Create))
+            {
+                try
+                {
+                    state.LastSaved = DateTime.Now;
+                    BinaryWriter writer = new BinaryWriter(fs);
+                    writer.Write(state.PlayerName);
+                    writer.Write(state.CharacterLevel);
+                    writer.Write(state.health);
+                    writer.Write(state.Energy);
+                    writer.Write(state.LevelScenario);
+                    writer.Write(state.ExperiencePoints);
+                    writer.Write(state.LastSaved.ToBinary());
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving game state in Binary: {ex.Message}");
+                    return false;
+                }
+            }
+        }
     }
 }
 
