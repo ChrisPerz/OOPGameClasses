@@ -39,7 +39,21 @@ namespace Services
 
         public async Task<GameState> LoadGameStateFromJson()
         {
-            
+            try
+            {
+                if (!File.Exists(saveFileJson))
+                {
+                    Console.WriteLine("Save file does not exist.");
+                    return null;
+                }
+                string jsonGameState = await File.ReadAllTextAsync(saveFileJson);
+                GameState state = JsonSerializer.Deserialize<GameState>(jsonGameState);
+                return state;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading game state from JSON: {ex.Message}");
+                return null;
         }
         
         public async Task<bool> SaveGameStateInBinary(GameState state)
@@ -64,6 +78,31 @@ namespace Services
                     Console.WriteLine($"Error saving game state in Binary: {ex.Message}");
                     return false;
                 }
+            }
+        }
+
+        public async Task<GameState> LoadGameStateFromBinary()
+        {
+            using( FileStream fs = new Filestream(saveFileBinary, FileMode.Open))
+            {
+                try
+                {
+                    BinaryReader reader = new BinaryReader(fs);
+                    GameState state = new GameState
+                    {
+                        PlayerName = reader.ReadString(),
+                        CharacterLevel = reader.ReadInt32(),
+                        Health = reader.ReadInt32(),
+                        Energy = reader.ReadInt32(),
+                        LevelScenario = reader.ReadString(),
+                        ExperiencePoints = reader.ReadInt32(),
+                        LastSaved = DateTime.FromBinary(reader.ReadInt64())
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading game state from Binary: {ex.Message}");
+                    return null;
             }
         }
     }
